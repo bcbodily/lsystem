@@ -1,56 +1,23 @@
 using System;
 
-namespace bc.Framework.Grammar
+namespace bc.Framework.Language
 {
     /// <summary>
     /// A production rule
     /// </summary>
-    public struct Production : IComparable<Production>, IEquatable<Production>
+    public struct Production : IProduction, IComparable<Production>, IEquatable<Production>
     {
         /// <summary>
-        /// backing member for <see cref="Production.Predecessor"/>
-        /// </summary>
-        private readonly string predecessor;
-
-        /// <summary>
-        /// backing member for <see cref="Production.Successor"/>
-        /// </summary>
-        private readonly string successor;
-
-        /// <summary>
-        /// The production predecessor
+        /// The production head
         /// </summary>
         /// <value></value>
-        public string Predecessor
-        {
-            get => predecessor;
-            init
-            {
-                if (value == "")
-                {
-                    throw new ArgumentException($"{nameof(this.Predecessor)} is empty; {nameof(this.Predecessor)} must be non-empty.");
-                }
-                predecessor = value;
-            }
-        }
+        public string Head { get; init; }
 
         /// <summary>
-        /// The production successor
+        /// The production body
         /// </summary>
         /// <value></value>
-        public string Successor
-        {
-            get => successor;
-
-            init
-            {
-                if (value == "")
-                {
-                    throw new ArgumentException($"{nameof(this.Successor)} is empty; {nameof(this.Successor)} must be non-empty.");
-                }
-                successor = value;
-            }
-        }
+        public string Body { get; init; }
 
         /// <summary>
         /// Compares this <see cref="Production"/> with a specified <see cref="Production"/> and indicates whether this value precedes, follows, or appears in the same position in the sort order as the specified value
@@ -60,8 +27,8 @@ namespace bc.Framework.Grammar
         /// </returns>
         public int CompareTo(Production other)
         {
-            var comp = Predecessor.CompareTo(other.Predecessor);
-            return comp != 0 ? comp : Successor.CompareTo(other.Successor);
+            var comp = Head.CompareTo(other.Head);
+            return comp != 0 ? comp : Body.CompareTo(other.Body);
         }
 
         /// <summary>
@@ -69,7 +36,7 @@ namespace bc.Framework.Grammar
         /// </summary>
         /// <param name="other">the <see cref="Production"/> value to compare with this value</param>
         /// <returns><c>true</c> if <paramref name="other"/> is equal to this value; otherwise, false</returns>
-        public bool Equals(Production other) => Predecessor.Equals(other.Predecessor) && Successor.Equals(other.Successor);
+        public bool Equals(Production other) => Head.Equals(other.Head) && Body.Equals(other.Body);
 
         /// <summary>
         /// Compares two <see cref="Production"/> values for equality
@@ -77,7 +44,7 @@ namespace bc.Framework.Grammar
         /// <param name="lhs">the first value</param>
         /// <param name="rhs">the second value</param>
         /// <returns><c>true</c> if <paramref name="lhs"/> and <paramref name="rhs"/> are equal values; otherwise, <c>false</c></returns>
-        public static bool operator ==(Production lhs, Production rhs) => lhs.Predecessor.Equals(rhs.Predecessor) && lhs.Successor.Equals(rhs.Successor);
+        public static bool operator ==(Production lhs, Production rhs) => lhs.Head.Equals(rhs.Head) && lhs.Body.Equals(rhs.Body);
 
         /// <summary>
         /// Compares two <see cref="Production"/> values for inequality
@@ -85,7 +52,7 @@ namespace bc.Framework.Grammar
         /// <param name="lhs">the first value</param>
         /// <param name="rhs">the second value</param>
         /// <returns><c>true</c> if <paramref name="lhs"/> and <paramref name="rhs"/> are not equal values; otherwise, <c>false</c></returns>
-        public static bool operator !=(Production lhs, Production rhs) => !lhs.Predecessor.Equals(rhs.Predecessor) || !lhs.Successor.Equals(rhs.Successor);
+        public static bool operator !=(Production lhs, Production rhs) => !lhs.Head.Equals(rhs.Head) || !lhs.Body.Equals(rhs.Body);
 
         /// <summary>
         /// Determines whether one <see cref="Production"/> value is less than another <see cref="Production"/> value
@@ -142,7 +109,6 @@ namespace bc.Framework.Grammar
         /// Calculates the hash code for a <see cref="Production"/> value
         /// </summary>
         /// <returns>the hash code for this value</returns>
-        public override int GetHashCode() => (Predecessor, Successor).GetHashCode();
+        public override int GetHashCode() => (Head, Body).GetHashCode();
     }
-
 }

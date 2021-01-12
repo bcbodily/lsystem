@@ -2,26 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace bc.Framework.Grammar
+namespace bc.Framework.Language
 {
     public struct LSystem
     {
-        public IEnumerable<string> Alphabet { get; init; }
+        public ISet<string> Alphabet { get; init; }
         public String Axiom { get; init; }
-        public IEnumerable<Production> Productions { get; init; }
+        public IEnumerable<IProduction> Productions { get; init; }
 
-        private IDictionary<string, string> RulesMap;
+        private IDictionary<string, IProduction> RulesMap;
 
-        public LSystem(IEnumerable<string> letters, String axiom, IEnumerable<Production> productions)
+        public LSystem(IEnumerable<string> letters, String axiom, IEnumerable<IProduction> productions)
         {
             Alphabet = letters.ToImmutableSortedSet();
             Axiom = axiom;
             Productions = productions.ToImmutableHashSet();
 
-            RulesMap = new Dictionary<string, string>();
+            RulesMap = new Dictionary<string, IProduction>();
             foreach (var production in productions)
             {
-                RulesMap.Add(production.Predecessor, production.Successor);
+                RulesMap.Add(production.Head, production);
             }
 
         }
@@ -34,7 +34,7 @@ namespace bc.Framework.Grammar
             string output = "";
             foreach (var c in input)
             {
-                output += RulesMap.ContainsKey(c.ToString()) ? RulesMap[c.ToString()] : c.ToString();
+                output += RulesMap.ContainsKey(c.ToString()) ? RulesMap[c.ToString()].Body : c.ToString();
             }
             return output;
         }
