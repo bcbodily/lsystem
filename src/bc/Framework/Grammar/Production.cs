@@ -87,21 +87,45 @@ namespace bc.Framework.Grammar
         /// <returns><c>true</c> if <paramref name="lhs"/> and <paramref name="rhs"/> are not equal values; otherwise, <c>false</c></returns>
         public static bool operator !=(Production lhs, Production rhs) => !lhs.Predecessor.Equals(rhs.Predecessor) || !lhs.Successor.Equals(rhs.Successor);
 
+        /// <summary>
+        /// Determines whether one <see cref="Production"/> value is less than another <see cref="Production"/> value
+        /// </summary>
+        /// <param name="left">the first value</param>
+        /// <param name="right">the second value</param>
+        /// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c></returns>
         public static bool operator <(Production left, Production right)
         {
             return left.CompareTo(right) < 0;
         }
 
+        /// <summary>
+        /// Determines whether one <see cref="Production"/> value is greater than another <see cref="Production"/> value
+        /// </summary>
+        /// <param name="left">the first value</param>
+        /// <param name="right">the second value</param>
+        /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c></returns>
         public static bool operator >(Production left, Production right)
         {
             return left.CompareTo(right) > 0;
         }
 
+        /// <summary>
+        /// Determines whether one <see cref="Production"/> value is less than or equal another <see cref="Production"/> value
+        /// </summary>
+        /// <param name="left">the first value</param>
+        /// <param name="right">the second value</param>
+        /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c></returns>
         public static bool operator <=(Production left, Production right)
         {
             return left.CompareTo(right) <= 0;
         }
 
+        /// <summary>
+        /// Determines whether one <see cref="Production"/> value is greater than or equal another <see cref="Production"/> value
+        /// </summary>
+        /// <param name="left">the first value</param>
+        /// <param name="right">the second value</param>
+        /// <returns><c>true</c> if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, <c>false</c></returns>
         public static bool operator >=(Production left, Production right)
         {
             return left.CompareTo(right) >= 0;

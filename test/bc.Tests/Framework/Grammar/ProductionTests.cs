@@ -497,6 +497,364 @@ namespace bc.Framework.Grammar
             Assert.AreEqual(expected, actual);
         }
 
+
+        /// <summary>
+        /// Verifies the greater than operator for <see cref="Production"/>, when the lhs value is equal to the rhs value, properly returns <c>false</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_GreaterThan_lhs_is_equal_returns_false()
+        {
+            var predessor = "a";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessor,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessor,
+                Successor = successor
+            };
+
+            Assert.AreEqual(lhs, rhs);
+
+            var expected = false;
+            var actual = lhs > rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies the greater than operator for <see cref="Production"/>, when the lhs value is greater than the rhs value, properly returns <c>true</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_GreaterThan_lhs_is_greaterThan_returns_true()
+        {
+            var predessorLhs = "b";
+            var predessorRhs = "a";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessorLhs,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessorRhs,
+                Successor = successor
+            };
+
+            Assert.IsTrue(lhs.CompareTo(rhs) > 0);
+
+            var expected = true;
+            var actual = lhs > rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies the greater than operator for <see cref="Production"/>, when the lhs value is less than the rhs value, properly returns <c>false</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_GreaterThan_lhs_is_lessThan_returns_false()
+        {
+            var predessorLhs = "a";
+            var predessorRhs = "b";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessorLhs,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessorRhs,
+                Successor = successor
+            };
+
+            Assert.IsTrue(lhs.CompareTo(rhs) < 0);
+
+            var expected = false;
+            var actual = lhs > rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        /// <summary>
+        /// Verifies the greater than or equal operator for <see cref="Production"/>, when the lhs value is equal to the rhs value, properly returns <c>true</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_GreaterThanOrEqual_lhs_is_equal_returns_true()
+        {
+            var predessor = "a";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessor,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessor,
+                Successor = successor
+            };
+
+            Assert.AreEqual(lhs, rhs);
+
+            var expected = true;
+            var actual = lhs >= rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies the greater than or equal operator for <see cref="Production"/>, when the lhs value is greater than the rhs value, properly returns <c>true</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_GreaterThanOrEqual_lhs_is_greaterThan_returns_true()
+        {
+            var predessorLhs = "b";
+            var predessorRhs = "a";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessorLhs,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessorRhs,
+                Successor = successor
+            };
+
+            Assert.IsTrue(lhs.CompareTo(rhs) > 0);
+
+            var expected = true;
+            var actual = lhs >= rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies the greater than or equal operator for <see cref="Production"/>, when the lhs value is less than the rhs value, properly returns <c>false</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_GreaterThanOrEqual_lhs_is_lessThan_returns_false()
+        {
+            var predessorLhs = "a";
+            var predessorRhs = "b";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessorLhs,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessorRhs,
+                Successor = successor
+            };
+
+            Assert.IsTrue(lhs.CompareTo(rhs) < 0);
+
+            var expected = false;
+            var actual = lhs >= rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies the less than operator for <see cref="Production"/>, when the lhs value is equal to the rhs value, properly returns <c>false</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_LessThan_lhs_is_equal_returns_false()
+        {
+            var predessor = "a";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessor,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessor,
+                Successor = successor
+            };
+
+            Assert.AreEqual(lhs, rhs);
+
+            var expected = false;
+            var actual = lhs < rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies the less than operator for <see cref="Production"/>, when the lhs value is greater than the rhs value, properly returns <c>false</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_LessThan_lhs_is_greaterThan_returns_false()
+        {
+            var predessorLhs = "b";
+            var predessorRhs = "a";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessorLhs,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessorRhs,
+                Successor = successor
+            };
+
+            Assert.IsTrue(lhs.CompareTo(rhs) > 0);
+
+            var expected = false;
+            var actual = lhs < rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies the less than operator for <see cref="Production"/>, when the lhs value is less than the rhs value, properly returns <c>true</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_LessThan_lhs_is_lessThan_returns_true()
+        {
+            var predessorLhs = "a";
+            var predessorRhs = "b";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessorLhs,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessorRhs,
+                Successor = successor
+            };
+
+            Assert.IsTrue(lhs.CompareTo(rhs) < 0);
+
+            var expected = true;
+            var actual = lhs < rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies the less than or equal operator for <see cref="Production"/>, when the lhs value is equal to the rhs value, properly returns <c>true</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_LessThanOrEqual_lhs_is_equal_returns_true()
+        {
+            var predessor = "a";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessor,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessor,
+                Successor = successor
+            };
+
+            Assert.AreEqual(lhs, rhs);
+
+            var expected = true;
+            var actual = lhs <= rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies the less than or equal operator for <see cref="Production"/>, when the lhs value is greater than the rhs value, properly returns <c>false</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_LessThanOrEqual_lhs_is_greaterThan_returns_false()
+        {
+            var predessorLhs = "b";
+            var predessorRhs = "a";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessorLhs,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessorRhs,
+                Successor = successor
+            };
+
+            Assert.IsTrue(lhs.CompareTo(rhs) > 0);
+
+            var expected = false;
+            var actual = lhs <= rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies the less than or equal operator for <see cref="Production"/>, when the lhs value is less than the rhs value, properly returns <c>true</c>
+        /// </summary>
+        [TestMethod]
+        public void Operator_LessThanOrEqual_lhs_is_lessThan_returns_true()
+        {
+            var predessorLhs = "a";
+            var predessorRhs = "b";
+            var successor = "b";
+
+            var lhs = new Production
+            {
+                Predecessor = predessorLhs,
+                Successor = successor
+            };
+
+            var rhs = new Production
+            {
+                Predecessor = predessorRhs,
+                Successor = successor
+            };
+
+            Assert.IsTrue(lhs.CompareTo(rhs) < 0);
+
+            var expected = true;
+            var actual = lhs <= rhs;
+
+            Assert.AreEqual(expected, actual);
+        }
+
         /// <summary>
         /// Verifies the inequality operator for <see cref="Production"/>, when <see cref="Production.Successor"/> values are not equal, properly returns <c>true</c>
         /// </summary>
