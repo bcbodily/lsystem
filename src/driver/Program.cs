@@ -10,54 +10,17 @@ namespace driver
     {
         static void Main(string[] args)
         {
-            // common RNG
-            var random = new Random(1);
-
-            // create an alphabet
-            var algaeAlphabet = new String[] { "A", "B" };
-
-            // create a rule
-            var rules = new IProduction[]
-            {
-                // A -> AB
-                // new Production
-                // {
-                //     Predecessor = "0",
-                //     Successor = "1[0]0"
-                // },
-                // B -> A
-                new StochasticProduction
-                {
-                    Head = "0",
-                    // Successor = "A"
-                    Productions = new StochasticValue<string>[]
-                    {
-                        new StochasticValue<string>
-                        {
-                            Value = "1[0]0",
-                            Probability = 0.5
-                        },
-                        new StochasticValue<string>
-                        {
-                            Value = "0",
-                            Probability = 0.5
-                        }
-                    },
-                    Random = random
-                }
-            };
-
-            // create system
-            var lsys = new LSystem(algaeAlphabet, "0", rules);
+            var lsys = LSystems.CANTOR_SET;
+            var reader = new ProductionsIterator(lsys.Productions);
 
             int count = 0;
             string input = lsys.Axiom;
 
             Console.WriteLine($"{count}:\t{input}");
-            while (count < 7)
+            while (count < 5)
             {
                 count++;
-                input = lsys.Generate(input);
+                input = reader.Generate(input);
                 Console.WriteLine($"{count}:\t{input}");
             }
         }
