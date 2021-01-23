@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 namespace bc.Framework.Language
 {
     /// <summary>
-    /// A collection of some common l-systems
+    /// A collection of some common L-systems
     /// </summary>
     public static class LSystems
     {
@@ -11,11 +11,11 @@ namespace bc.Framework.Language
         /// Lindenmayer's l-system for modelling algae growth
         /// </summary>
         /// <value></value>
-        public static LSystem ALGAE => new LSystem
+        public static LSystem ALGAE { get; } = new LSystemBuilder
         {
-            Axiom = "A",
-            Alphabet = new string[] { "A", "B" }.ToImmutableSortedSet(),
-            Productions = new IProduction[]
+            Start = "A",
+            Alphabet = new string[] { "A", "B" },
+            Productions = new Production[]
             {
                 new Production
                 {
@@ -27,14 +27,14 @@ namespace bc.Framework.Language
                     Head = "B",
                     Body = "A"
                 }
-            }.ToImmutableHashSet()
-        };
+            }
+        }.Build();
 
-        public static LSystem BINARY_FRACTAL_TREE => new LSystem
+        public static LSystem BINARY_FRACTAL_TREE { get; } = new LSystemBuilder
         {
-            Axiom = "0",
-            Alphabet = new string[] { "0", "1", "[", "]" }.ToImmutableSortedSet(),
-            Productions = new IProduction[]
+            Start = "0",
+            Alphabet = new string[] { "0", "1", "[", "]" },
+            Productions = new Production[]
             {
                 new Production
                 {
@@ -46,14 +46,14 @@ namespace bc.Framework.Language
                     Head = "0",
                     Body = "1[0]0"
                 }
-            }.ToImmutableHashSet()
-        };
+            }
+        }.Build();
 
-        public static LSystem CANTOR_SET => new LSystem
+        public static LSystem CANTOR_SET { get; } = new LSystemBuilder
         {
-            Axiom = "A",
-            Alphabet = new string[] {"A", "B"}.ToImmutableSortedSet(),
-            Productions = new IProduction[]
+            Start = "A",
+            Alphabet = new string[] { "A", "B" },
+            Productions = new Production[]
             {
                 new Production
                 {
@@ -65,7 +65,7 @@ namespace bc.Framework.Language
                     Head = "B",
                     Body = "BBB"
                 }
-            }.ToImmutableHashSet()
-        };
+            }
+        }.Build();
     }
 }

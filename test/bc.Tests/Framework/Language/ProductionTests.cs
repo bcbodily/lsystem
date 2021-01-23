@@ -10,23 +10,27 @@ namespace bc.Framework.Language
     public class ProductionTests
     {
         /// <summary>
-        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> and <see cref="Production.Body"/> values are both equal, properly returns <c>0</c>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> and <see cref="Production.Body"/> and <see cref="Production.Probability"/> values are both equal, properly returns <c>0</c>
         /// </summary>
+        [TestMethod]
         public void CompareTo_values_are_equal_returns_zero()
         {
             var predessor = "a";
             var successor = "b";
+            var probability = 1.0;
 
             var prod1 = new Production
             {
                 Head = predessor,
-                Body = successor
+                Body = successor,
+                Probability = probability
             };
 
             var prod2 = new Production
             {
                 Head = predessor,
-                Body = successor
+                Body = successor,
+                Probability = probability
             };
 
             Assert.AreEqual(prod2, prod1);
@@ -38,8 +42,73 @@ namespace bc.Framework.Language
         }
 
         /// <summary>
-        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> values are equal and the <see cref="Production.Body"/> value of this value is greater than the <see cref="Production.Body"/> value of the other value, properly returns a value greater than zero
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> and <see cref="Production.Body"/> values are equal and the <see cref="Production.Probability"/> value of this value is greater than the <see cref="Production.Probability"/> value of the other value, properly returns a positive value
         /// </summary>
+        [TestMethod]
+        public void CompareTo_Head_and_Body_values_are_equal_and_Probability_is_greater_returns_positive()
+        {
+            var head = "a";
+            var body = "c";
+            var probability1 = 1.0;
+            var probability2 = 0.4;
+
+            var prod1 = new Production
+            {
+                Head = head,
+                Body = body,
+                Probability = probability1,
+            };
+
+            var prod2 = new Production
+            {
+                Head = head,
+                Body = body,
+                Probability = probability2
+            };
+
+            Assert.AreEqual(prod2.Head, prod1.Head);
+            Assert.AreEqual(prod2.Body, prod1.Body);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) > 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) > 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> and <see cref="Production.Body"/> values are equal and the <see cref="Production.Probability"/> value of this value is lesser than the <see cref="Production.Probability"/> value of the other value, properly returns a negative value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_Head_and_Body_values_are_equal_and_Probability_is_lesser_returns_negative()
+        {
+            var head = "a";
+            var body = "c";
+            var probability1 = 0.4;
+            var probability2 = 1.0;
+
+            var prod1 = new Production
+            {
+                Head = head,
+                Body = body,
+                Probability = probability1,
+            };
+
+            var prod2 = new Production
+            {
+                Head = head,
+                Body = body,
+                Probability = probability2
+            };
+
+            Assert.AreEqual(prod2.Head, prod1.Head);
+            Assert.AreEqual(prod2.Body, prod1.Body);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) < 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) < 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> values are equal and the <see cref="Production.Body"/> value of this value is greater than the <see cref="Production.Body"/> value of the other value, properly returns a positive value
+        /// </summary>
+        [TestMethod]
         public void CompareTo_Head_values_are_equal_and_Body_value_is_greater_returns_positive()
         {
             var head = "a";
@@ -58,15 +127,16 @@ namespace bc.Framework.Language
                 Body = body2
             };
 
-            Assert.AreEqual(prod2, prod1);
+            Assert.AreEqual(prod2.Head, prod1.Head);
             Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) > 0);
 
             Assert.IsTrue(prod1.CompareTo(prod2) > 0);
         }
 
         /// <summary>
-        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> values are equal and the <see cref="Production.Body"/> value of this value is less, properly returns a value less than zero
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> values are equal and the <see cref="Production.Body"/> value of this value is less, properly returns a positive value
         /// </summary>
+        [TestMethod]
         public void CompareTo_Head_values_are_equal_and_Body_value_is_lesser_returns_negative()
         {
             var head = "a";
@@ -85,15 +155,16 @@ namespace bc.Framework.Language
                 Body = body2
             };
 
-            Assert.AreEqual(prod2, prod1);
+            Assert.AreEqual(prod2.Head, prod1.Head);
             Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) < 0);
 
             Assert.IsTrue(prod1.CompareTo(prod2) < 0);
         }
 
         /// <summary>
-        /// Verifies <see cref="Production.CompareTo(Production)"/>, when the <see cref="Production.Head"/> value of this value is greater, properly returns a value greater than zero
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when the <see cref="Production.Head"/> value of this value is greater, properly returns a positive value
         /// </summary>
+        [TestMethod]
         public void CompareTo_Head_values_is_greater_returns_positive()
         {
             var head1 = "b";
@@ -118,8 +189,9 @@ namespace bc.Framework.Language
         }
 
         /// <summary>
-        /// Verifies <see cref="Production.CompareTo(Production)"/>, when the <see cref="Production.Head"/> value of this value is less, properly returns a value less than zero
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when the <see cref="Production.Head"/> value of this value is less, properly returns a negative value
         /// </summary>
+        [TestMethod]
         public void CompareTo_Head_values_is_lesser_returns_negative()
         {
             var head1 = "a";
@@ -144,28 +216,32 @@ namespace bc.Framework.Language
         }
 
         /// <summary>
-        /// Verifies <see cref="Production.Equals(Production)"/>, when <see cref="Production.Head"/> and <see cref="Production.Body"/> values are equal, properly returns <c>true</c>
+        /// Verifies <see cref="Production.Equals(Production)"/>, when <see cref="Production.Head"/> and <see cref="Production.Body"/> and <see cref="Production.Probability"/> values are equal, properly returns <c>true</c>
         /// </summary>
         [TestMethod]
-        public void Equals_Head_and_Body_are_Equal_returns_true()
+        public void Equals_Head_and_Body_and_Probability_are_Equal_returns_true()
         {
             var head = "a";
             var body = "b";
+            var probability = 0.5;
 
             var prod1 = new Production
             {
                 Head = head,
-                Body = body
+                Body = body,
+                Probability = probability
             };
 
             var prod2 = new Production
             {
                 Head = head,
-                Body = body
+                Body = body,
+                Probability = probability
             };
 
             Assert.AreEqual(prod1.Head, prod2.Head);
             Assert.AreEqual(prod1.Body, prod2.Body);
+            Assert.AreEqual(prod1.Probability, prod2.Probability);
 
             var expected = true;
             var actual = prod1.Equals(prod2);
@@ -234,6 +310,39 @@ namespace bc.Framework.Language
         }
 
         /// <summary>
+        /// Verifies <see cref="Production.Equals(Production)"/>, when <see cref="Production.Probability"/> values are not equal, properly returns <c>false</c>
+        /// </summary>
+        [TestMethod]
+        public void Equals_Probabilities_areNot_equal_returns_false()
+        {
+            var head = "a";
+            var body = "b";
+            var probability1 = 0.5;
+            var probability2 = 0.6;
+
+            var prod1 = new Production
+            {
+                Head = head,
+                Body = body,
+                Probability = probability1
+            };
+
+            var prod2 = new Production
+            {
+                Head = head,
+                Body = body,
+                Probability = probability2
+            };
+
+            Assert.AreNotEqual(prod1.Probability, prod2.Probability);
+
+            var expected = false;
+            var actual = prod1.Equals(prod2);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
         /// Verifies <see cref="Production.Equals(object)"/>, when the other object is null, properly returns <c>false</c>
         /// </summary>
         [TestMethod]
@@ -258,9 +367,10 @@ namespace bc.Framework.Language
         {
             var head = "a";
             var body = "b";
+            var probability = 0.5;
 
-            var production = new Production { Head = head, Body = body };
-            Object other = new Production { Head = head, Body = body };
+            var production = new Production { Head = head, Body = body, Probability = probability };
+            Object other = new Production { Head = head, Body = body, Probability = probability };
 
             Assert.AreEqual(production, (Production)other);
 

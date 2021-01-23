@@ -10,19 +10,29 @@ namespace driver
     {
         static void Main(string[] args)
         {
-            var lsys = LSystems.CANTOR_SET;
-            var reader = new ProductionsIterator(lsys.Productions);
+            DisplaySystemDetails(LSystems.BINARY_FRACTAL_TREE);
+        }
 
-            int count = 0;
-            string input = lsys.Axiom;
-
-            Console.WriteLine($"{count}:\t{input}");
-            while (count < 5)
+        static void DisplaySystemDetails(IGrammar grammar)
+        {
+            Console.WriteLine("Grammar details");
+            Console.WriteLine();
+            Console.WriteLine($"Start:\t'{grammar.Start}'");
+            Console.WriteLine($"Nonterminals:\t'{String.Join("', '", grammar.Nonterminals)}'");
+            Console.WriteLine($"Terminals:\t'{String.Join("', '", grammar.Terminals)}'");
+            Console.WriteLine("Productions:");
+            foreach (var p in grammar.Productions)
             {
-                count++;
-                input = reader.Generate(input);
-                Console.WriteLine($"{count}:\t{input}");
+                DisplayProduction(p);
             }
+        }
+
+        static void DisplayProduction(Production production)
+        {
+            if (production.Probability == 1.0)
+                Console.WriteLine($"\t{production.Head} → {production.Body}");
+            else
+                Console.WriteLine($"\t{production.Head} ({production.Probability}) → {production.Body}");
         }
     }
 }
