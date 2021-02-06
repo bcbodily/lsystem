@@ -10,19 +10,143 @@ namespace bc.Framework.Language
     public class ProductionTests
     {
         /// <summary>
-        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> and <see cref="Production.Body"/> and <see cref="Production.Probability"/> values are both equal, properly returns <c>0</c>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> is empty for both values and all other members are equal, properly returns 0
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_both_Head_are_empty_all_other_equal_returns_zero()
+        {
+            var prod1 = new Production { Head = "", Body = "body", Precedent = "precedent", Next = "Next", Probability = 1.0 };
+            var prod2 = new Production { Head = "", Body = "body", Precedent = "precedent", Next = "Next", Probability = 1.0 };
+
+            Assert.IsTrue(prod1.Head == "");
+            Assert.IsTrue(prod2.Head == "");
+
+            Assert.AreEqual(prod1.Body, prod2.Body);
+            Assert.AreEqual(prod1.Precedent, prod2.Precedent);
+            Assert.AreEqual(prod1.Next, prod2.Next);
+            Assert.AreEqual(prod1.Probability, prod2.Probability);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) == 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> is null for both values and all other members are equal, properly returns 0
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_both_Head_are_null_all_other_equal_returns_zero()
+        {
+            var prod1 = new Production { Body = "", Precedent = "", Next = "", Probability = 1.0 };
+            var prod2 = new Production { Body = "", Precedent = "", Next = "", Probability = 1.0 };
+
+            Assert.IsNull(prod1.Head);
+            Assert.IsNull(prod2.Head);
+
+            Assert.AreEqual(prod1.Body, prod2.Body);
+            Assert.AreEqual(prod1.Precedent, prod2.Precedent);
+            Assert.AreEqual(prod1.Next, prod2.Next);
+            Assert.AreEqual(prod1.Probability, prod2.Probability);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) == 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> is empty and the other <see cref="Production.Head"/> is null, properly returns a positive value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_this_Head_is_empty_and_other_Head_is_null_all_other_are_equal_returns_positive()
+        {
+            var prod1 = new Production { Head = "", Body = "", Precedent = "", Next = "", Probability = 1.0 };
+            var prod2 = new Production { Head = null, Body = "", Precedent = "", Next = "", Probability = 1.0 };
+
+            Assert.AreEqual("", prod1.Head);
+            Assert.IsNull(prod2.Head);
+
+            Assert.AreEqual(prod1.Body, prod2.Body);
+            Assert.AreEqual(prod1.Precedent, prod2.Precedent);
+            Assert.AreEqual(prod1.Next, prod2.Next);
+            Assert.AreEqual(prod1.Probability, prod2.Probability);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) > 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> is empty and the other <see cref="Production.Head"/> is not empty, properly returns a negative value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_this_Head_is_empty_and_other_Head_isNot_empty_all_other_are_equal_returns_negative()
+        {
+            var prod1 = new Production { Head = "", Body = "", Precedent = "", Next = "", Probability = 1.0 };
+            var prod2 = new Production { Head = "a", Body = "", Precedent = "", Next = "", Probability = 1.0 };
+
+            Assert.IsTrue(prod1.Head.Length == 0);
+            Assert.IsTrue(prod2.Head.Length > 0);
+
+            Assert.AreEqual(prod1.Body, prod2.Body);
+            Assert.AreEqual(prod1.Precedent, prod2.Precedent);
+            Assert.AreEqual(prod1.Next, prod2.Next);
+            Assert.AreEqual(prod1.Probability, prod2.Probability);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) < 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> is null and the other <see cref="Production.Head"/> is empty, properly returns a negative value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_this_Head_is_null_and_other_Head_is_empty_all_other_are_equal_returns_negative()
+        {
+            var prod1 = new Production { Head = null, Body = "", Precedent = "", Next = "", Probability = 1.0 };
+            var prod2 = new Production { Head = "", Body = "", Precedent = "", Next = "", Probability = 1.0 };
+
+            Assert.IsNull(prod1.Head);
+            Assert.IsNotNull(prod2.Head);
+
+            Assert.AreEqual(prod1.Body, prod2.Body);
+            Assert.AreEqual(prod1.Precedent, prod2.Precedent);
+            Assert.AreEqual(prod1.Next, prod2.Next);
+            Assert.AreEqual(prod1.Probability, prod2.Probability);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) < 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> is not empty and the other <see cref="Production.Head"/> is empty, properly returns a positive value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_this_Head_isNot_empty_and_other_Head_is_empty_all_other_are_equal_returns_positive()
+        {
+            var prod1 = new Production { Head = "a", Body = "", Precedent = "", Next = "", Probability = 1.0 };
+            var prod2 = new Production { Head = "", Body = "", Precedent = "", Next = "", Probability = 1.0 };
+
+            Assert.IsTrue(prod1.Head.Length > 0);
+            Assert.IsTrue(prod2.Head.Length == 0);
+
+            Assert.AreEqual(prod1.Body, prod2.Body);
+            Assert.AreEqual(prod1.Precedent, prod2.Precedent);
+            Assert.AreEqual(prod1.Next, prod2.Next);
+            Assert.AreEqual(prod1.Probability, prod2.Probability);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) > 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> and <see cref="Production.Body"/> and <see cref="Production.Precedent"/> and <see cref="Production.Next"/> and <see cref="Production.Probability"/> values are equal, properly returns <c>0</c>
         /// </summary>
         [TestMethod]
         public void CompareTo_values_are_equal_returns_zero()
         {
             var predessor = "a";
             var successor = "b";
+            var precedent = "c";
+            var next = "d";
             var probability = 1.0;
 
             var prod1 = new Production
             {
                 Head = predessor,
                 Body = successor,
+                Next = next,
+                Precedent = precedent,
                 Probability = probability
             };
 
@@ -30,6 +154,8 @@ namespace bc.Framework.Language
             {
                 Head = predessor,
                 Body = successor,
+                Next = next,
+                Precedent = precedent,
                 Probability = probability
             };
 
@@ -455,6 +581,116 @@ namespace bc.Framework.Language
             Assert.AreEqual(prod2, prod1);
 
             Assert.AreEqual(prod1.GetHashCode(), prod2.GetHashCode());
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.Matches(string, int)"/>, when the input is empty, properly returns false
+        /// </summary>
+        [TestMethod]
+        public void Matches_contextfree_input_is_empty_returns_false()
+        {
+            var p = new Production();
+            var input = "";
+            var pos = 0;
+
+            Assert.IsTrue(input.Length == 0);
+
+            var expected = false;
+            var actual = p.Matches(input, pos);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.Matches(string, int)"/>, when <see cref="Production.Head"/> is empty, properly returns false
+        /// </summary>
+        [TestMethod]
+        public void Matches_Head_is_empty_returns_false()
+        {
+            var p = new Production { Head = "" };
+            var input = "any";
+            var pos = 0;
+
+            Assert.IsTrue(p.Head == "");
+
+            var expected = false;
+            var actual = p.Matches(input, pos);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.Matches(string, int)"/>, when <see cref="Production.Head"/> is null, properly returns false
+        /// </summary>
+        [TestMethod]
+        public void Matches_Head_is_null_returns_false()
+        {
+            var p = new Production();
+            var input = "any";
+            var pos = 0;
+
+            Assert.IsNull(p.Head);
+
+            var expected = false;
+            var actual = p.Matches(input, pos);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.Matches(string, int)"/>, when <see cref="Production.Head"/> is longer than the input, properly returns false
+        /// </summary>
+        /// <param name="head">the value to assigned to <see cref="Production.Head"/></param>
+        /// <param name="input">the input value</param>
+        [DataTestMethod]
+        [DataRow("ab", "a")]
+        [DataRow("abc", "ab")]
+        public void Matches_Head_is_larger_than_input_returns_false(string head, string input)
+        {
+            var p = new Production { Head = head };
+            var pos = 1;
+
+            Assert.IsTrue(p.Head.Length > input.Length);
+
+            var expected = false;
+            var actual = p.Matches(input, pos);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.Matches(string, int)"/>, when <see cref="Production.Head"/> matches the input at the specified position and has no precedent or next, properly returns true
+        /// </summary>
+        [TestMethod]
+        public void Matches_Head_matches_input_at_position_and_is_context_free_returns_true()
+        {
+            var p = new Production { Head = "a" };
+            var input = "bab";
+            var pos = 1;
+
+            Assert.AreEqual(p.Head, input.Substring(pos, 1));
+
+            var expected = true;
+            var actual = p.Matches(input, pos);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.Matches(string, int)"/>, when the input is null, properly returns false
+        /// </summary>
+        [TestMethod]
+        public void Matches_input_is_null_returns_false()
+        {
+            var p = new Production { Head = "a" };
+            string input = null;
+
+            Assert.IsNull(input);
+
+            var expected = false;
+            var actual = p.Matches(input, 1);
+
+            Assert.AreEqual(expected, actual);
         }
 
         /// <summary>
