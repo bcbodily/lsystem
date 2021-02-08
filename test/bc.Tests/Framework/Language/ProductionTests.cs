@@ -30,6 +30,78 @@ namespace bc.Framework.Language
         }
 
         /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> and <see cref="Production.Precedent"/> are equal to the other value, this <see cref="Production.Next"/> is after the other value, and all of the other members of this <see cref="Production"/> come before their corresponding members in the other value, properly returns a positive value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_both_Head_and_Precedent_are_equal_Next_is_after_other_Next_and_other_values_are_before_returns_positive()
+        {
+            var prod1 = new Production { Head = "a", Body = "", Precedent = "a", Next = "a", Probability = 0.0 };
+            var prod2 = new Production { Head = "a", Body = "b", Precedent = "a", Next = "", Probability = 1.0 };
+
+            Assert.IsTrue(prod1.Head.CompareTo(prod2.Head) == 0);
+            Assert.IsTrue(prod1.Precedent.CompareTo(prod2.Precedent) == 0);
+            Assert.IsTrue(prod1.Next.CompareTo(prod2.Next) > 0);
+            Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) < 0);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) < 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) > 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> and <see cref="Production.Precedent"/> are equal to the other value, this <see cref="Production.Next"/> is before the other value, and all of the other members of this <see cref="Production"/> come after their corresponding members in the other value, properly returns a negative value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_both_Head_and_Precedent_are_equal_Next_is_before_other_Next_and_other_values_are_after_returns_negative()
+        {
+            var prod1 = new Production { Head = "a", Body = "b", Precedent = "a", Next = "", Probability = 1.0 };
+            var prod2 = new Production { Head = "a", Body = "", Precedent = "a", Next = "a", Probability = 0.0 };
+
+            Assert.IsTrue(prod1.Head.CompareTo(prod2.Head) == 0);
+            Assert.IsTrue(prod1.Precedent.CompareTo(prod2.Precedent) == 0);
+            Assert.IsTrue(prod1.Next.CompareTo(prod2.Next) < 0);
+            Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) > 0);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) > 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) < 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> is equal to the other <see cref="Production.Head"/>, this <see cref="Production.Precedent"/> is after the other <see cref="Production.Precedent"/>, and all of the other members of this <see cref="Production"/> come before their corresponding members in the other value, properly returns a positive value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_both_Head_are_equal_Precedent_is_after_other_Precedent_and_other_values_are_before_returns_positive()
+        {
+            var prod1 = new Production { Head = "a", Body = "", Precedent = "b", Next = "", Probability = 0.0 };
+            var prod2 = new Production { Head = "a", Body = "b", Precedent = "a", Next = "b", Probability = 1.0 };
+
+            Assert.IsTrue(prod1.Head.CompareTo(prod2.Head) == 0);
+            Assert.IsTrue(prod1.Precedent.CompareTo(prod2.Precedent) > 0);
+            Assert.IsTrue(prod1.Next.CompareTo(prod2.Next) < 0);
+            Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) < 0);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) < 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) > 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> is equal to the other <see cref="Production.Head"/>, this <see cref="Production.Precedent"/> is before the other <see cref="Production.Precedent"/>, and all of the other members of this <see cref="Production"/> come after their corresponding members in the other value, properly returns a negative value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_both_Head_are_equal_Precedent_is_before_other_Precedent_and_other_values_are_after_returns_negative()
+        {
+            var prod1 = new Production { Head = "a", Body = "b", Precedent = "", Next = "b", Probability = 1.0 };
+            var prod2 = new Production { Head = "a", Body = "", Precedent = "b", Next = "", Probability = 0.0 };
+
+            Assert.IsTrue(prod1.Head.CompareTo(prod2.Head) == 0);
+            Assert.IsTrue(prod1.Precedent.CompareTo(prod2.Precedent) < 0);
+            Assert.IsTrue(prod1.Next.CompareTo(prod2.Next) > 0);
+            Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) > 0);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) > 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) < 0);
+        }
+
+        /// <summary>
         /// Verifies <see cref="Production.CompareTo(Production)"/>, when <see cref="Production.Head"/> is null for both values and all other members are equal, properly returns 0
         /// </summary>
         [TestMethod]
@@ -110,6 +182,26 @@ namespace bc.Framework.Language
         }
 
         /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> is null and the other <see cref="Production.Head"/> is not empty, properly returns a negative value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_this_Head_is_null_and_other_Head_isNot_empty_all_other_are_equal_returns_negative()
+        {
+            var prod1 = new Production { Head = null, Body = "", Precedent = "", Next = "", Probability = 1.0 };
+            var prod2 = new Production { Head = "a", Body = "", Precedent = "", Next = "", Probability = 1.0 };
+
+            Assert.IsNull(prod1.Head);
+            Assert.IsTrue(prod2.Head.Length > 0);
+
+            Assert.AreEqual(prod1.Body, prod2.Body);
+            Assert.AreEqual(prod1.Precedent, prod2.Precedent);
+            Assert.AreEqual(prod1.Next, prod2.Next);
+            Assert.AreEqual(prod1.Probability, prod2.Probability);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) < 0);
+        }
+
+        /// <summary>
         /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> is not empty and the other <see cref="Production.Head"/> is empty, properly returns a positive value
         /// </summary>
         [TestMethod]
@@ -120,6 +212,62 @@ namespace bc.Framework.Language
 
             Assert.IsTrue(prod1.Head.Length > 0);
             Assert.IsTrue(prod2.Head.Length == 0);
+
+            Assert.AreEqual(prod1.Body, prod2.Body);
+            Assert.AreEqual(prod1.Precedent, prod2.Precedent);
+            Assert.AreEqual(prod1.Next, prod2.Next);
+            Assert.AreEqual(prod1.Probability, prod2.Probability);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) > 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> comes after the other <see cref="Production.Head"/> and all of the other members of this <see cref="Production"/> come after their corresponding members in the other value, properly returns a positive value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_this_Head_is_after_other_Head_and_other_values_are_before_returns_positive()
+        {
+            var prod1 = new Production { Head = "b", Body = "", Precedent = "", Next = "", Probability = 0.0 };
+            var prod2 = new Production { Head = "a", Body = "b", Precedent = "b", Next = "b", Probability = 1.0 };
+
+            Assert.IsTrue(prod1.Head.CompareTo(prod2.Head) > 0);
+            Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) < 0);
+            Assert.IsTrue(prod1.Precedent.CompareTo(prod2.Precedent) < 0);
+            Assert.IsTrue(prod1.Next.CompareTo(prod2.Next) < 0);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) < 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) > 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> comes before the other <see cref="Production.Head"/> and all of the other members for this <see cref="Production"/> come before their corresponding members in the other value, properly returns a negative value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_this_Head_is_before_other_Head_and_other_values_are_after_returns_negative()
+        {
+            var prod1 = new Production { Head = "a", Body = "b", Precedent = "b", Next = "b", Probability = 1.0 };
+            var prod2 = new Production { Head = "b", Body = "", Precedent = "", Next = "", Probability = 0.0 };
+
+            Assert.IsTrue(prod1.Head.CompareTo(prod2.Head) < 0);
+            Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) > 0);
+            Assert.IsTrue(prod1.Precedent.CompareTo(prod2.Precedent) > 0);
+            Assert.IsTrue(prod1.Next.CompareTo(prod2.Next) > 0);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) > 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) < 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/> is not empty and the other <see cref="Production.Head"/> is null, properly returns a positive value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_this_Head_isNot_empty_and_other_Head_is_null_all_other_are_equal_returns_positive()
+        {
+            var prod1 = new Production { Head = "a", Body = "", Precedent = "", Next = "", Probability = 1.0 };
+            var prod2 = new Production { Head = null, Body = "", Precedent = "", Next = "", Probability = 1.0 };
+
+            Assert.IsTrue(prod1.Head.Length > 0);
+            Assert.IsNull(prod2.Head);
 
             Assert.AreEqual(prod1.Body, prod2.Body);
             Assert.AreEqual(prod1.Precedent, prod2.Precedent);
