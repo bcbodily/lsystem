@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-namespace bc.Framework.Language
+namespace bc.Framework.Language.Grammar
 {
     /// <summary>
     /// A collection of some common L-systems

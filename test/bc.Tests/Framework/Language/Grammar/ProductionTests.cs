@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace bc.Framework.Language
+namespace bc.Framework.Language.Grammar
 {
     /// <summary>
     /// Unit tests for <see cref="Production"/>
@@ -27,6 +27,78 @@ namespace bc.Framework.Language
             Assert.AreEqual(prod1.Probability, prod2.Probability);
 
             Assert.IsTrue(prod1.CompareTo(prod2) == 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/>, <see cref="Production.Precedent"/>, <see cref="Production.Next"/>, and <see cref="Production.Body"/> are equal to the other value, this <see cref="Production.Probability"/> is after the other value, properly returns a positive value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_both_Head_and_Precedent_and_Next_and_Body_are_equal_Probability_is_after_other_Probability_returns_positive()
+        {
+            var prod1 = new Production { Head = "a", Body = "a", Precedent = "a", Next = "a", Probability = 1.0 };
+            var prod2 = new Production { Head = "a", Body = "a", Precedent = "a", Next = "a", Probability = 0.0 };
+
+            Assert.IsTrue(prod1.Head.CompareTo(prod2.Head) == 0);
+            Assert.IsTrue(prod1.Precedent.CompareTo(prod2.Precedent) == 0);
+            Assert.IsTrue(prod1.Next.CompareTo(prod2.Next) == 0);
+            Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) == 0);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) > 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) > 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/>, <see cref="Production.Precedent"/>, <see cref="Production.Next"/>, and <see cref="Production.Body"/> are equal to the other value, this <see cref="Production.Probability"/> is before the other value, properly returns a negative value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_both_Head_and_Precedent_and_Next_and_Body_are_equal_Probability_is_before_other_Probability_returns_negative()
+        {
+            var prod1 = new Production { Head = "a", Body = "a", Precedent = "a", Next = "a", Probability = 0.0 };
+            var prod2 = new Production { Head = "a", Body = "a", Precedent = "a", Next = "a", Probability = 1.0 };
+
+            Assert.IsTrue(prod1.Head.CompareTo(prod2.Head) == 0);
+            Assert.IsTrue(prod1.Precedent.CompareTo(prod2.Precedent) == 0);
+            Assert.IsTrue(prod1.Next.CompareTo(prod2.Next) == 0);
+            Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) == 0);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) < 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) < 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/>, <see cref="Production.Precedent"/>, and <see cref="Production.Next"/> are equal to the other value, this <see cref="Production.Body"/> is after the other value, and all of the other members of this <see cref="Production"/> come before their corresponding members in the other value, properly returns a positive value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_both_Head_and_Precedent_and_Next_are_equal_Body_is_after_other_Body_and_other_values_are_before_returns_positive()
+        {
+            var prod1 = new Production { Head = "a", Body = "b", Precedent = "a", Next = "a", Probability = 0.0 };
+            var prod2 = new Production { Head = "a", Body = "", Precedent = "a", Next = "a", Probability = 1.0 };
+
+            Assert.IsTrue(prod1.Head.CompareTo(prod2.Head) == 0);
+            Assert.IsTrue(prod1.Precedent.CompareTo(prod2.Precedent) == 0);
+            Assert.IsTrue(prod1.Next.CompareTo(prod2.Next) == 0);
+            Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) > 0);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) < 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) > 0);
+        }
+
+        /// <summary>
+        /// Verifies <see cref="Production.CompareTo(Production)"/>, when this <see cref="Production.Head"/>, <see cref="Production.Precedent"/>, and <see cref="Production.Next"/> are equal to the other value, this <see cref="Production.Body"/> is before the other value, and all of the other members of this <see cref="Production"/> come after their corresponding members in the other value, properly returns a negative value
+        /// </summary>
+        [TestMethod]
+        public void CompareTo_both_Head_and_Precedent_and_Next_are_equal_Body_is_before_other_Body_and_other_values_are_after_returns_negative()
+        {
+            var prod1 = new Production { Head = "a", Body = "", Precedent = "a", Next = "a", Probability = 1.0 };
+            var prod2 = new Production { Head = "a", Body = "b", Precedent = "a", Next = "a", Probability = 0.0 };
+
+            Assert.IsTrue(prod1.Head.CompareTo(prod2.Head) == 0);
+            Assert.IsTrue(prod1.Precedent.CompareTo(prod2.Precedent) == 0);
+            Assert.IsTrue(prod1.Next.CompareTo(prod2.Next) == 0);
+            Assert.IsTrue(prod1.Body.CompareTo(prod2.Body) < 0);
+            Assert.IsTrue(prod1.Probability.CompareTo(prod2.Probability) > 0);
+
+            Assert.IsTrue(prod1.CompareTo(prod2) < 0);
         }
 
         /// <summary>

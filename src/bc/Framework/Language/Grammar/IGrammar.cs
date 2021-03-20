@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace bc.Framework.Language
+namespace bc.Framework.Language.Grammar
 {
     /// <summary>
     /// Interface to a formal grammar

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace bc.Framework.Language
+namespace bc.Framework.Language.Grammar
 {
     /// <summary>
     /// A context-free L-system
@@ -80,10 +80,7 @@ namespace bc.Framework.Language
             var nonterminals = GetNonterminals(productions);
             foreach (var production in productions)
             {
-                foreach(var c in production.Body)
-                {
-                    terminals.Add(c.ToString());
-                }
+                terminals.Add(production.Body);
             }
             terminals.ExceptWith(nonterminals);
 

@@ -1,13 +1,20 @@
 using System;
-using bc.Framework.Extensions;
 
-namespace bc.Framework.Language
+namespace bc.Framework.Language.Grammar
 {
     /// <summary>
     /// A production rule
     /// </summary>
     public struct Production : IComparable<Production>, IEquatable<Production>
     {
+        /// <summary>
+        /// Utility method that performs compare to functionality on two string, accounting for possible null values
+        /// </summary>
+        /// <param name="lhs">the first string to compare</param>
+        /// <param name="rhs">the second string to compare</param>
+        /// <returns>an int indicating the relative sort order of <paramref name="lhs"/> relative to <paramref name="rhs"/>, with nulls coming before all other values</returns>
+        private static int NullSafeCompareTo(string lhs, string rhs) => ( lhs == null && rhs == null) ? 0 : ( lhs == null && rhs != null) ? -(rhs.CompareTo(lhs)) : lhs.CompareTo(rhs);
+
         /// <summary>
         /// The production head
         /// </summary>
@@ -46,23 +53,21 @@ namespace bc.Framework.Language
         /// </returns>
         public int CompareTo(Production other)
         {
-            var comp = Head.NullSafeCompareTo(other.Head);
+            var comp = NullSafeCompareTo(Head, other.Head);
             if (comp != 0) return comp;
 
-            comp = Precedent.NullSafeCompareTo(other.Precedent);
+            comp = NullSafeCompareTo(Precedent, other.Precedent);
             if (comp != 0) return comp;
 
-            comp = Next.NullSafeCompareTo(other.Next);
+            comp = NullSafeCompareTo(Next, other.Next);
             if (comp != 0) return comp;
 
-            comp = Body.NullSafeCompareTo(other.Body);
+            comp = NullSafeCompareTo(Body, other.Body);
             if (comp != 0) return comp;
 
             // else
             return Probability.CompareTo(other.Probability);
         }
-
-        //private static int NullSafeCompareTo(string lhs, string rhs) => ( lhs == null && rhs == null) ? 0 : ( lhs == null && rhs != null) ? -(rhs.CompareTo(lhs)) : lhs.CompareTo(rhs);
 
         /// <summary>
         /// Determines whether this value and another <see cref="Production"/> value have the same value.
@@ -184,6 +189,7 @@ namespace bc.Framework.Language
         /// <returns>the hash code for this value</returns>
         public override int GetHashCode() => (Head, Body, Precedent, Next, Probability).GetHashCode();
 
+        /// </inheritdoc>
         public override string ToString()
         {
             var text = "";
